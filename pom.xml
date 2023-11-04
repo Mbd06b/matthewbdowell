@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -17,9 +16,18 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
+    <servlet.port>8080</servlet.port>
+		<jetty.stop.port>9100</jetty.stop.port>
+    <sonar.java.libraries>target</sonar.java.libraries>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -29,6 +37,23 @@
   </dependencies>
 
   <build>
-    <finalName>matthewbdowell</finalName>
+    <finalName>${project.name}</finalName>
+    <plugins>
+        <plugin>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>10.0.18</version>
+          <configuration>
+            <httpConnector>
+              <port>${servlet.port}</port>
+            </httpConnector>
+            <stopKey>quit</stopKey>
+            <stopPort>${jetty.stop.port}</stopPort>
+            <webApp>
+              <contextPath>/</contextPath>
+            </webApp>
+				  </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
