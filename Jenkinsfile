@@ -37,14 +37,19 @@ pipeline {
               }
             }
         }
-
-        stage('Lint HTML') {
+        
+        stage('Lint') {
             steps {
               container('maven'){
         	       script {
+                     echo 'Output Directory Structure before compile'
+                     sh 'ls -R' //output what's being seen here
+                     sh 'mvn clean compile -ntp'
+                     echo 'Output Directory Structure After compile'
+                     sh 'ls -R' //output what's being seen here
+
                   withSonarQubeEnv('ee-sonarqube') {
-                      // Your build and analysis steps
-                      sh 'mvn clean verify sonar:sonar'
+                      sh 'mvn verify sonar:sonar -Dsonar.java.binaries=target/classes'
                   }
                  }
               }
