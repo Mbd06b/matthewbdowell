@@ -1,0 +1,44 @@
+schemaVersion: 2.2.0
+metadata:
+  name: matthewbdowell
+  namespace: matthewbdowell-homepage
+attributes:
+  controller.devfile.io/devworkspace-config:
+    name: devworkspace-config
+    namespace: eclipse-che
+  controller.devfile.io/storage-type: per-user
+projects:
+  - git:
+      remotes:
+        origin: https://github.com/Mbd06b/matthewbdowell.git
+    name: matthewbdowell
+components:
+  - container:
+      endpoints:
+        - exposure: none
+          name: debug
+          protocol: tcp
+          targetPort: 5005
+        - exposure: public
+          name: 8080-tcp
+          protocol: http
+          targetPort: 8080
+      env:
+        - name: CHE_DASHBOARD_URL
+          value: https://code.ethosengine.com
+        - name: CHE_PLUGIN_REGISTRY_URL
+          value: https://code.ethosengine.com/plugin-registry/v3
+        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+          value: http://plugin-registry.eclipse-che.svc:8080/v3
+        - name: OPENVSX_REGISTRY_URL
+          value: https://open-vsx.org
+      image: quay.io/devfile/universal-developer-image@sha256:6e4095cd243be852970fc7aec20935a0e3c334c5541aa82903fb803b61970ca0
+      memoryLimit: 1Gi
+      sourceMapping: /projects
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+    name: tools
+  - name: m2
+    volume:
+      size: 500Mb
