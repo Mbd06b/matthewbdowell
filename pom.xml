@@ -18,7 +18,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <servlet.port>8080</servlet.port>
 		<jetty.stop.port>9100</jetty.stop.port>
-    <sonar.java.binaries>target/classes</sonar.java.binaries>
+    <sonar.java.libraries>target</sonar.java.libraries>
   </properties>
 
   <dependencies>
