@@ -44,7 +44,7 @@ pipeline {
         	       script {
                   withSonarQubeEnv('ee-sonarqube') {
                       sh 'mvn clean compile'
-                      sh 'mvn verify sonar:sonar'
+                      sh 'mvn verify sonar:sonar -Dsonar.java.binaries=target/classes'
                   }
                  }
               }
