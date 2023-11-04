@@ -42,9 +42,11 @@ pipeline {
             steps {
               container('maven'){
         	       script {
+                     echo 'Output Directory Structure'
+                     sh 'ls -R' //output what's being seen here
+                     sh 'mvn clean compile'
+
                   withSonarQubeEnv('ee-sonarqube') {
-                      sh 'ls -R' //output what's being seen here
-                      sh 'mvn clean compile'
                       sh 'mvn verify sonar:sonar -Dsonar.java.binaries=target/classes'
                   }
                  }
