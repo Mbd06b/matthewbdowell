@@ -37,13 +37,23 @@ pipeline {
               }
             }
         }
-
-        stage('Lint HTML') {
+        
+        
+        stage('Compile') {
+            steps {
+              container('maven'){
+        	       script {
+                      sh 'mvn clean compile'
+                 }
+              }
+            }
+        }
+        
+        stage('Lint') {
             steps {
               container('maven'){
         	       script {
                   withSonarQubeEnv('ee-sonarqube') {
-                      // Your build and analysis steps
                       sh 'mvn clean verify sonar:sonar'
                   }
                  }
