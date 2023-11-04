@@ -41,4 +41,4 @@ components:
     name: tools
   - name: m2
     volume:
-      size: 500Mb
+      size: 500Mi
