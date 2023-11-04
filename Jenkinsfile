@@ -43,6 +43,7 @@ pipeline {
               container('maven'){
         	       script {
                   withSonarQubeEnv('ee-sonarqube') {
+                      sh 'ls -R' //output what's being seen here
                       sh 'mvn clean compile'
                       sh 'mvn verify sonar:sonar -Dsonar.java.binaries=target/classes'
                   }
