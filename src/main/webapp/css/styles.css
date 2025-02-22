@@ -19,56 +19,23 @@ body {
     overflow: hidden;
 }
 
-.page-container {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
+ a {
+    color: var(--tech-glow);
+    text-decoration: none;
+    font-weight: 500;
 }
 
-.sidebar {
-    width: 300px;
-    height: 100vh;
-    padding: 2rem;
-    background: var(--forest-light);
-    border-right: 1px solid var(--tech-accent);
-    overflow-y: auto;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+a:hover {
+    text-decoration: underline;
+    color: var(--tech-bright);
 }
-
-.sidebar img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
-
-.main-content {
-    flex: 1;
-    margin-left: 300px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    padding-top: 4rem;
-}
-
-.content-scrollable {
-    flex: 1;
-    overflow-y: auto;
-    padding: 2rem;
-}
-
 header {
     background: var(--forest-light);
     padding: 1.5rem 2rem;
     border-bottom: 1px solid var(--tech-accent);
     position: fixed;
     top: 0;
-    left: 300px;
+    left: 0;
     right: 0;
     z-index: 1000;
     display: flex;
@@ -85,18 +52,141 @@ h1 {
 nav {
     display: flex;
     gap: 1.5rem;
+
+}
+nav li {
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-bottom: 0.5rem;
+}
+.page-container {
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
 }
 
-footer {
-    padding: 1.5rem;
+.sidebar {
+    min-width: 300px; 
+	max-width: 400px;
+    height: calc(100vh - 70px); 
+    padding: 2rem;
     background: var(--forest-light);
+    border-right: 1px solid var(--tech-accent);
+    overflow-y: none;
+    left: 0;
+    top: 70px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar img {
+    max-width: 400px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.main-content {
+	flex: 1;
+	padding: 6rem 2rem 2rem; 
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	height: 100vh;
+	box-sizing: border-box;
+}
+
+section {
+            background-color: var(--forest-light);
+            border-radius: 8px;
+            padding: 2rem;
+			margin-top: 2rem;
+            box-shadow: 0 0 20px var(--tech-accent);
+            border: 1px solid var(--tech-accent);
+        }
+
+        section p {
+            margin: 0;
+            font-size: 1.125rem;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        section a {
+            color: var(--tech-glow);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+		
+		.tech-term {
+		    color: var(--tech-glow);
+		    font-weight: 500;
+		}
+		.tool-description {
+		     color: var(--leaf-light);
+		     font-style: italic;
+		     opacity: 0.9;
+		     margin-left: 0.5rem;
+		 }
+
+.content-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+
+footer {
+    background: var(--forest-light);
+    color: var(--leaf-light);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
     border-top: 1px solid var(--tech-accent);
     position: fixed;
     bottom: 0;
-    left: 300px;
+    left: 0;
     right: 0;
-    text-align: center;
 }
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--leaf-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-icon:hover {
+    color: var(--tech-glow);
+    transform: scale(1.05);
+}
+
+.social-icon i {
+    font-size: 1.2rem;
+    color: var(--tech-bright);
+}
+
+footer p {
+    margin: 0;
+}
+
+
+
 
 @media (max-width: 768px) {
     .page-container {
@@ -104,7 +194,7 @@ footer {
     }
 
     .sidebar {
-        position: static;
+       /* position: static; */
         width: 100%;
         height: auto;
         border-right: none;
@@ -126,3 +216,4 @@ footer {
         left: 0;
     }
 }
+
