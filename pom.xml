@@ -4,18 +4,20 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.ethosengine</groupId>
-  <artifactId>matthewbdowell</artifactId>
+  <artifactId>mbdsite</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>matthewbdowell Maven Webapp</name>
-  <url>http://www.example.com</url>
+  <name>Matthew B Dowell | ethosengine personal site</name>
+  <url>https://www.ethosengine.com</url>
 
   <properties>
-    <java.version>21</java.version>
+    <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
     <servlet.port>8080</servlet.port>
     <jetty.stop.port>9100</jetty.stop.port>
     <sonar.java.libraries>target</sonar.java.libraries>
@@ -44,9 +46,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.14.0</version>
                 <configuration>
-                    <release>21</release>
+                  <source>${java.version}</source>
+                  <target>${java.version}</target>
+                  <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
