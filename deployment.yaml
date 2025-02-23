@@ -94,7 +94,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: mbdsite-ingress
-  namespace: ethosengineu oa
+  namespace: ethosengine
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
