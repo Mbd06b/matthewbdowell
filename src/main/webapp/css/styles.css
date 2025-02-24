@@ -9,17 +9,13 @@
 
 body {
     font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-    background: var(--forest-dark);
+    background-color: var(--forest-dark);
     color: var(--leaf-light);
     margin: 0;
     line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow: hidden;
 }
 
- a {
+a {
     color: var(--tech-glow);
     text-decoration: none;
     font-weight: 500;
@@ -29,17 +25,14 @@ a:hover {
     text-decoration: underline;
     color: var(--tech-bright);
 }
+
 header {
-    background: var(--forest-light);
+    background-color: var(--forest-light);
     padding: 1.5rem 2rem;
     border-bottom: 1px solid var(--tech-accent);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
+    text-align: left;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -47,110 +40,85 @@ h1 {
     color: var(--tech-bright);
     font-size: 2rem;
     margin: 0;
-}
-
-nav {
     display: flex;
-    gap: 1.5rem;
+    align-items: baseline;
+}
 
+.title.brand {
+    font-weight: bold;
+    margin-right: 0.5em;
 }
-nav li {
-	justify-content: center;
-	flex-wrap: wrap;
-	margin-bottom: 0.5rem;
+
+.title.name {
+    font-weight: normal;
+    color: var(--leaf-light);
 }
+
 .page-container {
-	display: flex;
-	flex-direction: row;
-	height: 100vh;
-	width: 100vw;
-	overflow: hidden;
+    overflow: auto;
+    margin: 0 auto;
 }
 
 .sidebar {
-    min-width: 300px; 
-	max-width: 400px;
-    height: calc(100vh - 70px); 
+    float: left;
+    width: 30%;
     padding: 2rem;
-    background: var(--forest-light);
+    background-color: var(--forest-light);
     border-right: 1px solid var(--tech-accent);
-    overflow-y: none;
-    left: 0;
-    top: 70px;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .sidebar img {
-    max-width: 400px;
+    max-width: 100%;
     height: auto;
     border-radius: 4px;
 }
 
 .main-content {
-	flex: 1;
-	padding: 6rem 2rem 2rem; 
-	display: flex;
-	flex-direction: column;
-	overflow-y: auto;
-	height: 100vh;
-	box-sizing: border-box;
+    float: left;
+    width: 70%;
+    padding: 2rem;
+    box-sizing: border-box;
 }
 
 section {
-            background-color: var(--forest-light);
-            border-radius: 8px;
-            padding: 2rem;
-			margin-top: 2rem;
-            box-shadow: 0 0 20px var(--tech-accent);
-            border: 1px solid var(--tech-accent);
-        }
-
-        section p {
-            margin: 0;
-            font-size: 1.125rem;
-            text-align: justify;
-            hyphens: auto;
-        }
-
-        section a {
-            color: var(--tech-glow);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-		
-		.tech-term {
-		    color: var(--tech-glow);
-		    font-weight: 500;
-		}
-		.tool-description {
-		     color: var(--leaf-light);
-		     font-style: italic;
-		     opacity: 0.9;
-		     margin-left: 0.5rem;
-		 }
-
-.content-scrollable {
-    flex: 1;
-    overflow-y: auto;
+    background-color: var(--forest-light);
+    border-radius: 8px;
     padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 0 20px var(--tech-accent);
+    border: 1px solid var(--tech-accent);
+}
+
+section p {
+    margin: 0;
+    font-size: 1.125rem;
+    text-align: justify;
+    hyphens: auto;
+}
+
+.tech-term {
+    color: var(--tech-glow);
+    font-weight: 500;
+}
+
+.tool-description {
+    color: var(--leaf-light);
+    font-style: italic;
+    opacity: 0.9;
+    margin-left: 0.5rem;
 }
 
 
 footer {
-    background: var(--forest-light);
+    background-color: var(--forest-light);
     color: var(--leaf-light);
     text-align: center;
     padding: 1.5rem;
     font-size: 0.9rem;
     border-top: 1px solid var(--tech-accent);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    clear: both;
 }
 
 .social-links {
@@ -181,39 +149,44 @@ footer {
     color: var(--tech-bright);
 }
 
-footer p {
-    margin: 0;
-}
 
+/* Media query for mobile devices */
+@media only screen and (max-width: 768px) {
 
-
-
-@media (max-width: 768px) {
-    .page-container {
-        flex-direction: column;
+    .sidebar,
+    .main-content {
+        width: 100%;
+        float: none;
     }
 
     .sidebar {
-       /* position: static; */
-        width: 100%;
-        height: auto;
         border-right: none;
         border-bottom: 1px solid var(--tech-accent);
     }
 
-    .main-content {
-        margin-left: 0;
-        padding-top: 0;
-    }
-
     header {
-        position: static;
-        left: 0;
+        padding: 1rem;
+        text-align: center;
+        justify-content: center;
     }
 
-    footer {
-        position: static;
-        left: 0;
+    h1 {
+        font-size: 1.75rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .title.brand {
+        margin-right: 0;
+        margin-bottom: 0.25em;
+    }
+
+    .main-content {
+        padding-top: 1rem;
+    }
+
+    section {
+        padding: 1.5rem;
+        margin-top: 1.5rem;
     }
 }
-
