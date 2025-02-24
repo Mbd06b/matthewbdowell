@@ -33,7 +33,7 @@ a:visited {
 }
 
 a:visited:hover {
-    color: rgba(230, 126, 34, 0.8);
+    color: var(--earthy-orange-light);
 }
 
 header {
