@@ -1,10 +1,12 @@
 :root {
-    --forest-dark: #1a231f;
-    --forest-light: #243129;
-    --leaf-light: #c9d4c5;
-    --tech-glow: #7fcbee;
+    --forest-dark: rgb(26, 35, 31);
+    --forest-light: rgb(36, 49, 41);
+    --leaf-light: rgb(201, 212, 197);
+    --tech-glow: rgb(127, 203, 238);
     --tech-accent: rgba(127, 203, 238, 0.15);
     --tech-bright: rgba(127, 203, 238, 0.8);
+    --earthy-orange: rgb(217, 124, 43);
+    --earthy-orange-light: rgba(217, 124, 43, 0.8);
 }
 
 body {
@@ -24,6 +26,14 @@ a {
 a:hover {
     text-decoration: underline;
     color: var(--tech-bright);
+}
+
+a:visited {
+    color: var(--earthy-orange);
+}
+
+a:visited:hover {
+    color: rgba(230, 126, 34, 0.8);
 }
 
 header {
@@ -92,10 +102,14 @@ section {
 }
 
 section p {
-    margin: 0;
+    margin: 0 0 1.5rem 0;
     font-size: 1.125rem;
     text-align: justify;
     hyphens: auto;
+}
+
+section p:last-of-type {
+    margin-bottom: 0;
 }
 
 .tech-term {
@@ -186,7 +200,7 @@ footer {
     }
 
     section {
-        padding: 1.5rem;
+        padding: 1.0rem;
         margin-top: 1.5rem;
     }
 }
