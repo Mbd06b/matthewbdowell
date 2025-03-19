@@ -37,14 +37,6 @@ pipeline {
     
     stages {
 
-        stage('Debug Webhook') {
-            steps {
-                echo "Received ref: ${ref}"
-                echo "Received action: ${action}"
-                echo "All environment variables:"
-                sh 'env | sort'
-            }
-        }
         stage('Checkout') {
 
             steps {
