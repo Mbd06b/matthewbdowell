@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mbdsite
+  namespace: ethosengine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mbdsite
+  template:
+    metadata:
+      labels:
+        app: mbdsite
+    spec:
+      initContainers:
+      - name: git-clone
+        image: alpine/git
+        command:
+        - git
+        - clone
+        - https://github.com/mbd06b/matthewbdowell.git
+        - /repo
+        volumeMounts:
+        - name: content
+          mountPath: /repo
+      - name: copy-files
+        image: alpine
+        command: 
+        - sh
+        - -c
+        - cp -r /repo/src/main/webapp/* /web-content/
+        volumeMounts:
+        - name: content
+          mountPath: /repo
+        - name: web-content
+          mountPath: /web-content
+      containers:
+      - name: mbdsite
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: web-content
+          mountPath: /usr/share/nginx/html
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: content
+        emptyDir: {}
+      - name: web-content
+        emptyDir: {}
+      - name: nginx-config
+        configMap:
+          name: mbdsite-nginx-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mbdsite-nginx-config
+  namespace: ethosengine
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name ethosengine.com;
+        root /usr/share/nginx/html;
+        index index.html;
+        
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+        
+        location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
+            expires 7d;
+            add_header Cache-Control "public, no-transform";
+        }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mbdsite-service
+spec:
+  selector:
+    app: mbdsite
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mbdsite-ingress
+  namespace: ethosengineu oa
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  ingressClassName: public
+  tls:
+  - hosts:
+    - ethosengine.com
+    secretName: mbdsite-tls-cert
+  rules:
+  - host: ethosengine.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: mbdsite-service
+            port:
+              number: 80

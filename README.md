@@ -1,5 +1,4 @@
 [![Contribute](https://www.eclipse.org/che/contribute.svg)](https://code.ethosengine.com/#https://github.com/Mbd06b/matthewbdowell)
 
-# matthewbdowell
-Personal website.
-
+# mbdsite
+A Personal website and landing page for Matthew B. Dowell
