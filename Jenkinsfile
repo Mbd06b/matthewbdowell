@@ -17,6 +17,14 @@ pipeline {
        volumeMounts:
        - name: maven-settings-volume
          mountPath: /usr/share/maven/ref/settings.xml
+     - name: maven-jdk21
+       image: maven:3.9.9-eclipse-temurin-21
+       command:
+       - cat
+       tty: true
+       volumeMounts:
+       - name: maven-settings-volume
+       mountPath: /usr/share/maven/ref/settings.xml
      volumes:
       - name: maven-settings-volume
         configMap:
@@ -40,7 +48,7 @@ pipeline {
         
         stage('Lint') {
             steps {
-              container('maven'){
+              container('maven-jdk21'){
         	       script {
                      echo 'Output Directory Structure before compile'
                      sh 'ls -R' //output what's being seen here
