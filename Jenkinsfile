@@ -49,13 +49,9 @@ pipeline {
             printPostContent: true,
             silentResponse: false,
             
-            // This handles direct pushes to main/review branches
-            regexpFilterText: '$ref',
-            regexpFilterExpression: '^refs/heads/(main|review)$',
-            
-            // This handles pull requests where either source or target is main/review
-            regexpFilterText: '$action $pull_request_source $pull_request_target',
-            regexpFilterExpression: '^(opened|reopened|synchronize) .* (main|review)$|^(opened|reopened|synchronize) (main|review) .*$'
+            // This handles direct pushes to main/review branches OR merge/pull requests
+            regexpFilterText: '$ref $action $pull_request_source $pull_request_target',
+            regexpFilterExpression: '^refs/heads/(main|review) .*|.* (opened|reopened|synchronize) .* (main|review)$|.* (opened|reopened|synchronize) (main|review) .*$'
         )
     }
 
