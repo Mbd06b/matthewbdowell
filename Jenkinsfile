@@ -62,7 +62,7 @@ pipeline {
                     sh 'mvn verify sonar:sonar \
                         -Dsonar.java.binaries=target/classes \
                         -Dsonar.sources=src/main/java,src/main/webapp \
-                        -Dsonar.java.libraries=target/dependency/*.jar \
+                        -Dsonar.java.libraries=$MVN_REPO/**/*.jar \
                         -Dsonar.javascript.node=node \
                         -Dsonar.html.file.suffixes=.html,.xhtml,.jsf,.jsp \
                         -Dsonar.css.file.suffixes=.css,.less,.scss'                  }
