@@ -35,23 +35,6 @@ pipeline {
         }
     }
     
-    triggers {
-        GenericTrigger(
-            genericVariables: [
-                [key: 'ref', value: '$.ref'],
-                [key: 'pull_request_target', value: '$.pull_request.base.ref']
-            ],
-            causeString: 'Triggered by changes to review branch',
-            printContributedVariables: true,
-            printPostContent: true,
-            
-            // Simple filter that catches both direct pushes to review branch
-            // and pull requests targeting the review branch
-            regexpFilterText: '$ref$pull_request_target',
-            regexpFilterExpression: 'refs/heads/review|review'
-        )
-    }
-
     stages {
 
         stage('Debug Webhook') {
