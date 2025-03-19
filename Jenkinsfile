@@ -35,12 +35,10 @@ pipeline {
         }
     }
     
-    when {
-        anyOf {
-            branch 'main'
-            branch 'review'
-            expression { env.CHANGE_ID != null } // pull or merge reqs
-        }
+    triggers {
+        githubPush(
+            branchFilter: 'main|review'
+        )
     }
 
     stages {
@@ -49,19 +47,7 @@ pipeline {
             steps {
               container('maven'){
         	      script {
-                    if (env.CHANGE_ID) {
-                            // This is a pull request
-                            checkout scm
-                        } else {
-                            // This is a branch build (main or review)
-                            checkout([
-                                $class: 'GitSCM',
-                                branches: [[name: env.BRANCH_NAME]],
-                                userRemoteConfigs: [[
-                                    url: 'https://github.com/Mbd06b/matthewbdowell.git'
-                                ]]
-                            ])
-                        }         
+                        checkout scm      
                      }
               }
             }
