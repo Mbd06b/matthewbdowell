@@ -35,6 +35,13 @@ pipeline {
         }
     }
 
+when {
+    anyOf {
+        branch 'main'
+        branch 'review'
+    }
+}
+
     stages {
         stage('Checkout') {
             steps {
