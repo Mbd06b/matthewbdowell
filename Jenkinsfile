@@ -66,26 +66,6 @@ pipeline {
             }
         }
 
-        stage('Merge to Main') {
-            steps {
-              container('maven'){
-                script {
-                    // Only proceed if previous stages are successful
-                    def result = sh(script: 'git status --porcelain', returnStdout: true).trim()
-                    if (result == "") {
-                        // Checkout the main branch
-                        sh 'git checkout main'
-                        // Merge the review branch
-                        sh 'git merge review'
-                        // Push changes to the remote repository
-                        sh 'git push origin main'
-                    } else {
-                        error "There are uncommitted changes after linting, merge to main aborted."
-                    }
-                }
-            }
-          }
-        }
     }
 
     post {
