@@ -57,7 +57,8 @@ pipeline {
                      sh 'mvn clean compile -ntp'
                      echo 'Output Directory Structure After compile'
                      sh 'ls -R' //output what's being seen here
-
+                     MVN_REPO=$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)
+                    echo $MVN_REPO;
                   withSonarQubeEnv('ee-sonarqube') {
                     sh 'mvn verify sonar:sonar \
                         -Dsonar.java.binaries=target/classes \
