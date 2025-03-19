@@ -34,16 +34,18 @@ pipeline {
     '''
         }
     }
+    
+    when {
+        anyOf {
+            branch 'main'
+            branch 'review'
+            expression { env.CHANGE_ID != null } // pull or merge reqs
+        }
+    }
 
     stages {
         stage('Checkout') {
-            when {
-                anyOf {
-                    branch 'main'
-                    branch 'review'
-                    expression { env.CHANGE_ID != null } // pull or merge reqs
-                }
-            }
+
             steps {
               container('maven'){
         	      script {
