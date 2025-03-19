@@ -24,7 +24,7 @@ pipeline {
        tty: true
        volumeMounts:
        - name: maven-settings-volume
-       mountPath: /usr/share/maven/ref/settings.xml
+         mountPath: /usr/share/maven/ref/settings.xml
      volumes:
       - name: maven-settings-volume
         configMap:
@@ -34,14 +34,16 @@ pipeline {
     '''
         }
     }
-
+    
     stages {
+
         stage('Checkout') {
+
             steps {
               container('maven'){
         	      script {
-                  git branch: 'review', url: 'https://github.com/Mbd06b/matthewbdowell.git'
-                }
+                        checkout scm      
+                     }
               }
             }
         }
@@ -64,26 +66,6 @@ pipeline {
             }
         }
 
-        stage('Merge to Main') {
-            steps {
-              container('maven'){
-                script {
-                    // Only proceed if previous stages are successful
-                    def result = sh(script: 'git status --porcelain', returnStdout: true).trim()
-                    if (result == "") {
-                        // Checkout the main branch
-                        sh 'git checkout main'
-                        // Merge the review branch
-                        sh 'git merge review'
-                        // Push changes to the remote repository
-                        sh 'git push origin main'
-                    } else {
-                        error "There are uncommitted changes after linting, merge to main aborted."
-                    }
-                }
-            }
-          }
-        }
     }
 
     post {
