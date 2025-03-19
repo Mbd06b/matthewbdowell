@@ -34,14 +34,35 @@ pipeline {
     '''
         }
     }
+    
+    triggers {
+        GenericTrigger(
+            genericVariables: [
+                [key: 'ref', value: '$.ref'],
+                [key: 'action', value: '$.action'],
+                [key: 'pull_request_source', value: '$.pull_request.head.ref'],
+                [key: 'pull_request_target', value: '$.pull_request.base.ref']
+            ],
+            causeString: 'Triggered by $ref or PR from $pull_request_source to $pull_request_target',
+          // token: 'your-webhook-token', // commented out for testing
+            printContributedVariables: true,
+            printPostContent: true,
+            silentResponse: false,
+            
+            // This handles direct pushes to main/review branches OR merge/pull requests
+            regexpFilterText: '$ref $action $pull_request_source $pull_request_target',
+            regexpFilterExpression: '^refs/heads/(main|review) .*|.* (opened|reopened|synchronize) .* (main|review)$|.* (opened|reopened|synchronize) (main|review) .*$'
+        )
+    }
 
     stages {
         stage('Checkout') {
+
             steps {
               container('maven'){
         	      script {
-                  git branch: 'review', url: 'https://github.com/Mbd06b/matthewbdowell.git'
-                }
+                        checkout scm      
+                     }
               }
             }
         }
