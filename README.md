@@ -2,8 +2,3 @@
 
 # mbdsite
 A Personal website and landing page for Matthew B. Dowell
-
-
-
-
-
