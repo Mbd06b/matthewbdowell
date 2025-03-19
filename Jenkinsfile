@@ -24,7 +24,7 @@ pipeline {
        tty: true
        volumeMounts:
        - name: maven-settings-volume
-       mountPath: /usr/share/maven/ref/settings.xml
+         mountPath: /usr/share/maven/ref/settings.xml
      volumes:
       - name: maven-settings-volume
         configMap:
