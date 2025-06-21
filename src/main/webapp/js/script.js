@@ -34,4 +34,5 @@ document.addEventListener("DOMContentLoaded", () => {
             link.classList.toggle("active", link.getAttribute("href").substring(1) === currentSection);
         });
     });
+
 });
