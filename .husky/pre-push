@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+CHANGED=$(git diff --name-only @{push}.. 2>/dev/null || echo "")
+
+if echo "$CHANGED" | grep -q "Jenkinsfile"; then
+  echo "Linting Jenkinsfiles..."
+  npx npm-groovy-lint \
+    --files '**/*Jenkinsfile*' \
+    --ignorepattern '**/node_modules/**' \
+    --failon error
+fi

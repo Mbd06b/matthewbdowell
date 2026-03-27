@@ -1,0 +1,2 @@
+FROM nginx:1.27-alpine
+COPY src/main/webapp/ /usr/share/nginx/html/

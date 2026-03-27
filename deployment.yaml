@@ -3,6 +3,10 @@ kind: Deployment
 metadata:
   name: mbdsite
   namespace: ethosengine
+  labels:
+    app: mbdsite
+    app.kubernetes.io/version: DEPLOY_VERSION_PLACEHOLDER
+    app.kubernetes.io/managed-by: jenkins
 spec:
   replicas: 1
   selector:
@@ -12,44 +16,18 @@ spec:
     metadata:
       labels:
         app: mbdsite
+        app.kubernetes.io/version: DEPLOY_VERSION_PLACEHOLDER
     spec:
-      initContainers:
-      - name: git-clone
-        image: alpine/git
-        command:
-        - git
-        - clone
-        - https://github.com/mbd06b/matthewbdowell.git
-        - /repo
-        volumeMounts:
-        - name: content
-          mountPath: /repo
-      - name: copy-files
-        image: alpine
-        command: 
-        - sh
-        - -c
-        - cp -r /repo/src/main/webapp/* /web-content/
-        volumeMounts:
-        - name: content
-          mountPath: /repo
-        - name: web-content
-          mountPath: /web-content
       containers:
       - name: mbdsite
-        image: nginx:latest
+        image: harbor.ethosengine.com/ethosengine/mbdsite:IMAGE_TAG_PLACEHOLDER
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: web-content
-          mountPath: /usr/share/nginx/html
         - name: nginx-config
           mountPath: /etc/nginx/conf.d
       volumes:
-      - name: content
-        emptyDir: {}
-      - name: web-content
-        emptyDir: {}
       - name: nginx-config
         configMap:
           name: mbdsite-nginx-config
@@ -66,11 +44,11 @@ data:
         server_name ethosengine.com;
         root /usr/share/nginx/html;
         index index.html;
-        
+
         location / {
             try_files $uri $uri/ /index.html;
         }
-        
+
         location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
             expires 7d;
             add_header Cache-Control "public, no-transform";
@@ -81,6 +59,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mbdsite-service
+  namespace: ethosengine
 spec:
   selector:
     app: mbdsite
@@ -94,7 +73,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: mbdsite-ingress
-  namespace: ethosengineu oa
+  namespace: ethosengine
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
