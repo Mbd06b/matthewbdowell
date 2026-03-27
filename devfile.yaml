@@ -13,32 +13,55 @@ projects:
         origin: https://github.com/Mbd06b/matthewbdowell.git
     name: matthewbdowell
 components:
-  - container:
+  - name: tools
+    container:
+      image: harbor.ethosengine.com/devspaces/udi-plus:latest
+      memoryLimit: 4Gi
+      sourceMapping: /projects
+      env:
+        # Claude and general config
+        - name: CLAUDE_CONFIG_DIR
+          value: /projects/.claude-config
+        - name: USER
+          value: user
+        # Jenkins integration
+        - name: JENKINS_URL
+          value: "https://jenkins.ethosengine.com"
+        # SonarQube MCP configuration (SONARQUBE_TOKEN comes from K8s secret)
+        - name: STORAGE_PATH
+          value: /projects/.sonarqube-mcp
+        - name: SONARQUBE_URL
+          value: "https://sonarqube.ethosengine.com"
+        # Maven local repo under /projects (persistent source mapping)
+        - name: MAVEN_OPTS
+          value: "-Dmaven.repo.local=/projects/.m2/repository"
       endpoints:
-        - exposure: none
-          name: debug
+        - name: debug
+          exposure: none
           protocol: tcp
           targetPort: 5005
-        - exposure: public
-          name: 8080-tcp
+        - name: 8080-tcp
+          exposure: public
           protocol: http
           targetPort: 8080
-      env:
-        - name: CHE_DASHBOARD_URL
-          value: https://code.ethosengine.com
-        - name: CHE_PLUGIN_REGISTRY_URL
-          value: https://code.ethosengine.com/plugin-registry/v3
-        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
-          value: http://plugin-registry.eclipse-che.svc:8080/v3
-        - name: OPENVSX_REGISTRY_URL
-          value: https://open-vsx.org
-      image: quay.io/devfile/universal-developer-image@sha256:6e4095cd243be852970fc7aec20935a0e3c334c5541aa82903fb803b61970ca0
-      memoryLimit: 1Gi
-      sourceMapping: /projects
-      volumeMounts:
-        - name: m2
-          path: /home/user/.m2
-    name: tools
-  - name: m2
-    volume:
-      size: 500Mi
+
+commands:
+  - id: setup-vscode-cli
+    exec:
+      component: tools
+      commandLine: |
+        # Create VS Code CLI symlink (code-oss -> code)
+        mkdir -p /home/user/.local/bin
+        if [ -f /checode/checode-linux-libc/ubi9/bin/remote-cli/code-oss ]; then
+          ln -sf /checode/checode-linux-libc/ubi9/bin/remote-cli/code-oss /home/user/.local/bin/code
+        fi
+
+        # Link ~/.claude to persistent config dir for VS Code extension IDE detection
+        rm -rf /home/user/.claude 2>/dev/null || true
+        ln -sf "$CLAUDE_CONFIG_DIR" /home/user/.claude
+        mkdir -p /home/user/.claude/ide
+
+
+#events:
+#  postStart:
+#    - setup-vscode-cli
