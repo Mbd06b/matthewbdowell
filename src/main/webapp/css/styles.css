@@ -105,7 +105,7 @@ section p {
     margin: 0 0 1.5rem 0;
     font-size: 1.125rem;
     text-align: justify;
-    hyphens: auto;
+    hyphens: none;
 }
 
 section p:last-of-type {
@@ -164,6 +164,16 @@ footer {
 }
 
 
+.elohim-logo {
+    float: left;
+    margin: 0 1.5rem 1rem 0;
+}
+
+.elohim-logo img {
+    max-width: 200px;
+    border-radius: 8px;
+}
+
 /* Media query for mobile devices */
 @media only screen and (max-width: 768px) {
 
@@ -202,5 +212,11 @@ footer {
     section {
         padding: 1.0rem;
         margin-top: 1.5rem;
+    }
+
+    .elohim-logo {
+        float: none;
+        text-align: center;
+        margin: 0 0 1rem 0;
     }
 }
